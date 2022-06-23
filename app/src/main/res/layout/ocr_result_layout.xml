@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="24dp">
+
+        <Button
+            android:id="@+id/button_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button 1"
+            android:padding="16dp"
+            android:layout_margin="8dp"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_green_dark"/>
+
+        <Button
+            android:id="@+id/button_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_margin="8dp"
+            android:text="Button 2"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_blue_light"/>
+
+        <Button
+            android:id="@+id/button_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_margin="8dp"
+            android:text="Button 3"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_dark"/>
+
+    </LinearLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="@android:color/holo_orange_light"
+
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="fsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewffsadfdasfgrgrgwrgwgwefewf"
+            android:padding="16dp"
+            android:textSize="16sp"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

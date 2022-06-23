@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordinator_Layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/white">
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/image_preview_card"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_margin="16dp"-->
+<!--        app:cardElevation="8dp">-->
+
+    <io.github.karl.ocrdemo.OcrImageView
+        android:id="@+id/image_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        tools:src="@tools:sample/backgrounds/scenic" />
+<!--    </com.google.android.material.card.MaterialCardView>-->
+
+    <LinearLayout
+        android:id="@+id/custom_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:layout_anchorGravity="bottom|end"
+        app:behavior_peekHeight="50dp"
+        app:behavior_hideable="false"
+        android:background="@drawable/bottom_sheet_layout_shape"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+<!--        如果不加入clickable会导致加载list列表后-->
+<!--        有imageview的地方无法向下拖动，会报错：-->
+<!--        Ignoring pointerId=0 because ACTION_DOWN was not received for this pointer before ACTION_MOVE. It likely happened because  ViewDragHelper did not receive all the events in the event stream-->
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp"
+                android:scaleType="center"
+                android:src="@mipmap/round_bar_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <ImageView
+                android:id="@+id/open_take_pic"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:alpha="0.25"
+                android:src="@mipmap/icon_takepic"
+                android:scaleType="fitCenter"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tint="@color/black" />
+
+            <ImageView
+                android:id="@+id/open_select_image"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="10dp"
+                android:alpha="0.25"
+                android:src="@mipmap/picture"
+                android:scaleType="fitCenter"
+                app:layout_constraintRight_toLeftOf="@id/open_take_pic"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tint="@color/black" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/image_view"
+            android:nestedScrollingEnabled="true"
+            />
+    </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
