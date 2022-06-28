@@ -35,15 +35,6 @@ class OcrImageView(context: Context, attributeSet: AttributeSet) :
         postInvalidate()
     }
 
-    private fun findOcrItemWithRegion(x: Int, y: Int): OcrItem? {
-        for ((index, region) in ocrRegions.withIndex()) {
-            if (region.contains(x, y)) {
-                return ocrItems[index]
-            }
-        }
-        return null
-    }
-
     private fun findOcrItemPositionWithRegion(x: Int, y: Int): Int? {
         for ((index, region) in ocrRegions.withIndex()) {
             if (region.contains(x, y)) {
@@ -77,10 +68,11 @@ class OcrImageView(context: Context, attributeSet: AttributeSet) :
                     val x = event.x.toInt()
                     val y = event.y.toInt()
 
-                    val clickOcrItem: OcrItem? = findOcrItemWithRegion(x, y)
-                    if (clickOcrItem != null) {
-                        clickOcrItem(clickOcrItem)
-                        ocrImageListener?.onClick(findOcrItemPositionWithRegion(x, y)!!, clickOcrItem)
+                    val clickOcrItemIndex = findOcrItemPositionWithRegion(x, y)
+                    if (clickOcrItemIndex != null) {
+                        val item = ocrItems[clickOcrItemIndex]
+                        clickOcrItem(item)
+                        ocrImageListener?.onClick(clickOcrItemIndex, item)
                         super.performClick()
                     }
                 }
@@ -94,8 +86,25 @@ class OcrImageView(context: Context, attributeSet: AttributeSet) :
         if (canvas != null) {
             onDrawOcrBoxes(canvas)
         }
-
     }
+
+//    var heightOffset = 0
+//    private var heightFirst = 0
+//
+//    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+//        if(heightFirst == 0){
+//            heightFirst = MeasureSpec.getSize(heightMeasureSpec)
+//            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+//            return
+//        }
+//        val height = heightFirst - heightOffset
+//        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), height)
+//    }
+//
+//    fun resetHeightSize(heightOffset: Int){
+//        this.heightOffset = heightOffset
+//        requestLayout()
+//    }
 
     fun setOcrImageListener(ocrImageListener: OcrImageListener){
         this.ocrImageListener = ocrImageListener

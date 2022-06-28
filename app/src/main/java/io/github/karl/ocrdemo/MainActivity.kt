@@ -18,23 +18,103 @@ import com.google.gson.Gson
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.loadBitmap
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
 import okio.buffer
 import okio.source
 import java.io.File
 import java.io.IOException
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
+import android.app.Activity
+
+
+
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
+    private val mockResponseJsonStr = """
+        {
+            "errId": 0,
+            "errMsg": "",
+            "result": [{
+                "boxes": [[71, 1798],[264, 1806],[262, 1854],[69, 1846]],
+                "text": "Authority",
+                "score": 0.9999019
+            }, {
+                "boxes": [[75, 1742],[716, 1748],[714, 1794],[73, 1788]],
+                "text": "Government Root Certification",
+                "score": 0.9929104
+            }, {
+                "boxes": [[77, 1552],[714, 1552],[714, 1586],[77, 1586]],
+                "text": "Go Daddy Root Certificate Authority-G2",
+                "score": 0.99476784
+            }, {
+                "boxes": [[79, 1484],[470, 1490],[468, 1536],[77, 1530]],
+                "text": "saacammonne",
+                "score": 0.55913043
+            }, {
+                "boxes": [[71, 1284],[387, 1288],[385, 1328],[69, 1324]],
+                "text": "GlobalSign Root CA",
+                "score": 0.9982361
+            }, {
+                "boxes": [[73, 1222],[432, 1230],[430, 1282],[71, 1274]],
+                "text": "GlobalSign nv-sa",
+                "score": 0.9990079
+            }, {
+                "boxes": [[73, 1026],[250, 1034],[248, 1074],[71, 1066]],
+                "text": "GlobalSign",
+                "score": 0.99623775
+            }, {
+                "boxes": [[73, 966],[301, 974],[299, 1022],[71, 1014]],
+                "text": "GlobalSign",
+                "score": 0.98376197
+            }, {
+                "boxes": [[73, 768],[250, 776],[248, 816],[71, 808]],
+                "text": "Gamasaspe",
+                "score": 0.59074664
+            }, {
+                "boxes": [[73, 704],[305, 714],[303, 768],[71, 758]],
+                "text": "GlobalSign",
+                "score": 0.9983882
+            }, {
+                "boxes": [[71, 510],[252, 518],[250, 558],[69, 550]],
+                "text": "GlobalSign",
+                "score": 0.99850523
+            }, {
+                "boxes": [[73, 444],[305, 454],[303, 508],[71, 498]],
+                "text": "swdsasignGd",
+                "score": 0.6600375
+            }, {
+                "boxes": [[665, 232],[752, 232],[752, 286],[665, 286]],
+                "text": "电电电",
+                "score": 0.68177694
+            }, {
+                "boxes": [[329, 230],[418, 230],[418, 284],[329, 284]],
+                "text": "杂东景",
+                "score": 0.28567907
+            }, {
+                "boxes": [[73, 122],[450, 122],[450, 176],[73, 176]],
+                "text": "个一信任的证书",
+                "score": 0.9976823
+            }, {
+                "boxes": [[889, 32],[1038, 28],[1040, 76],[891, 80]],
+                "text": "物电区A",
+                "score": 0.0875141
+            }, {
+                "boxes": [[41, 34],[297, 28],[299, 74],[43, 80]],
+                "text": "17:030Ri08",
+                "score": 0.73744255
+            }]
+        }
+    """.trimIndent()
 
     private lateinit var client: OkHttpClient
+    private lateinit var mockWebServer: MockWebServer
     private var latestTmpUri: Uri? = null
     private var takeImageTempFile: File? = null
     private lateinit var behavior: BottomSheetBehavior<View>
@@ -44,13 +124,25 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //        1050
     }
 
+    //获取状态栏的高度
+    private fun getStatusBarHeight(activity: Activity): Int {
+        val resourceId = activity.resources.getIdentifier(
+            "status_bar_height",
+            "dimen",
+            "android"
+        )
+        return if (resourceId > 0) {
+            activity.resources.getDimensionPixelSize(resourceId)
+        } else 0
+    }
+
     private val displayHeight: Int by lazy {
-        resources.displayMetrics.heightPixels - behavior.peekHeight
+        resources.displayMetrics.heightPixels - behavior.peekHeight - getStatusBarHeight(this)
 //        1680
     }
 
     private val adapter =
-        OcrListAdapter(OcrItemListener { position, item ->
+        OcrListAdapter(OcrItemListener { _, item ->
             image_preview.selectOcrBox(ocrItem = item)
         })
 
@@ -100,59 +192,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
 
-//    fun cvtColor() {
-//        val bitmap: Bitmap = BitmapFactory.decodeResource(resources, R.mipmap.a123)
-//        val src = Mat()
-//        val dst = Mat()
-//        Utils.bitmapToMat(bitmap, src)
-//        //转换为灰度图模式
-//        Imgproc.cvtColor(src, dst, Imgproc.COLOR_RGB2GRAY)
-//
-//        //把mat转换回bitmap
-//        Utils.matToBitmap(dst,bitmap)
-//        image_preview.setImageBitmap(bitmap)
-//        src.release()
-//        dst.release()
-//    }
-//
-//    private val mLoaderCallback = object : BaseLoaderCallback(this) {
-//        override fun onManagerConnected(status: Int) {
-//            when(status){
-//                LoaderCallbackInterface.SUCCESS -> {
-//                    Log.i(
-//                        "MainActivity",
-//                        "OpenCV loaded successfully8888888"
-//                    )
-//                    cvtColor()
-//                }
-//                else -> {
-//                    super.onManagerConnected(status)
-//                }
-//            }
-//        }
-//    }
-
-    override fun onResume() {
-        super.onResume()
-//        if (!OpenCVLoader.initDebug()) {
-//            Log.d(
-//                "MainActivity",
-//                "Internal OpenCV library not found. Using OpenCV Manager for initialization"
-//            )
-//            OpenCVLoader.initAsync(
-//                OpenCVLoader.OPENCV_VERSION_3_0_0,
-//                this,
-//                mLoaderCallback
-//            )
-//        } else {
-//            Log.d(
-//                "MainActivity",
-//                "OpenCV library found inside package. Using it!"
-//            )
-//            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS)
-//        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -162,6 +201,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .build()
+
+        mockWebServer = MockWebServer()
 
         recycle_view.adapter = adapter
         recycle_view.layoutManager = LinearLayoutManager(this)
@@ -182,46 +223,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 val bottomSheetHeightOffset =
-                    bottomSheet.height * slideOffset
+                    (bottomSheet.height - behavior.peekHeight) * slideOffset
                 val layoutParams = image_preview.layoutParams
                 val width = displayWidth
                 val height = displayHeight
                 layoutParams.height =
                     (height - bottomSheetHeightOffset).toInt()
                 image_preview.layoutParams = layoutParams
-            }
+           }
         })
 
         image_preview.setOcrImageListener(OcrImageListener { position, item ->
             adapter.linkageClick(position)
         })
-
-//        Toast.makeText(
-//            this,
-//            "displayWidth = $displayWidth, displayHeight=$displayHeight",
-//            Toast.LENGTH_SHORT
-//        ).show()
-
-//        val ocrItem = OcrItem(
-//            text = "dasda",
-//            color = Color.argb(255, 210, 211, 212).toColor(),
-//            score = 10.1f
-//        )
-//        val ocrItems = mutableListOf(
-//            ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,
-//            ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,
-//            ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,
-//            ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,
-//            ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,
-//            ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,
-//            ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,ocrItem,
-//            ocrItem
-//        )
-//        runOnUiThread {
-//            ocrResultList.clear()
-//            ocrResultList.addAll(ocrItems)
-//            adapter.notifyDataSetChanged()
-//        }
 
     }
 
@@ -261,14 +275,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun postImage(file: File) {
-
-//        val inputStream = contentResolver.openInputStream(uri)
-//        val picData = inputStream?.source()?.buffer()?.readByteArray()
-//        val bodyData = "image_data=${String(Base64.encode(picData, Base64.URL_SAFE))}"
-
-//        val picData = inputStream?.source()?.buffer()?.readByteString()
-//        val bodyData = "image_data=${picData!!.base64Url()}"
-
         val picData = file.source().buffer().readByteString()
         val bodyData = "image_data=${
             URLEncoder.encode(
@@ -277,12 +283,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             )
         }"
 
+        mockWebServer.enqueue(
+            MockResponse().setBody(mockResponseJsonStr)
+        )
+        val mockUrl = mockWebServer.url("/ocr")
+
+        val url = "http://${mockUrl.host}:${mockWebServer.port}"
+//        val url = "http://10.0.200.20:8080/ocr"
+
         val requestBody =
             bodyData.toRequestBody("application/x-www-form-urlencoded".toMediaType())
         val request = Request.Builder()
-//            .url("http://10.0.10.38:5000/ocr")
-//            .url("http://10.0.10.2:8080/ocr")
-            .url("http://10.0.200.20:8080/ocr")
+            .url(url)
             .post(requestBody)
             .addHeader("Content-Type", "application/x-www-form-urlencoded")
             .build()

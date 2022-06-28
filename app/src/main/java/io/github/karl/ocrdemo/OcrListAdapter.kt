@@ -17,7 +17,7 @@ class OcrListAdapter(
         val scoreView: TextView = view.findViewById(R.id.ocr_result_score)
     }
 
-    var selectPosition = -1
+    var optionPosition = -1
     var isClick: Boolean = false
 
     override fun onCreateViewHolder(
@@ -41,7 +41,7 @@ class OcrListAdapter(
         holder.scoreView.text = ocrItem.score.toString()
         holder.scoreView.setTextColor(ocrItem.color.toArgb())
 
-        if (selectPosition == position && isClick) {
+        if (optionPosition == position && isClick) {
             holder.itemView.setBackgroundResource(R.color.select_background)
         } else {
             holder.itemView.setBackgroundResource(R.color.white)
@@ -59,11 +59,11 @@ class OcrListAdapter(
         isClick = if (!isClick) {
             true
         } else {
-            selectPosition != position
+            optionPosition != position
         }
-        notifyItemChanged(selectPosition)
-        selectPosition = position
-        notifyItemChanged(selectPosition)
+        notifyItemChanged(optionPosition)
+        optionPosition = position
+        notifyItemChanged(optionPosition)
     }
 
     class OcrDiffCallBack : DiffUtil.ItemCallback<OcrItem>() {

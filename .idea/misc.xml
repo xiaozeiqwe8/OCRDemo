@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Git/gitOcrDemo/app/src/main/res/layout/activity_main.xml" value="0.24214792299898683" />
+        <entry key="..\:/Git/gitOcrDemo/app/src/main/res/layout/ocr_result_layout.xml" value="0.1" />
+        <entry key="..\:/Git/gitOcrDemo/app/src/main/res/layout/ocr_row_item.xml" value="0.1" />
         <entry key="..\:/Git/gitOcrDemo/app/src/main/res/layout/sliderup_panel.xml" value="0.1" />
       </map>
     </option>
